@@ -1,1 +1,1 @@
-"POC, integração com SNPC"
+"POC, integração com SNPC ( protocol SOAP)" 
