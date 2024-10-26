@@ -13,7 +13,6 @@ public class SngpcIntegrationService implements SngpcSoap {
             throw new RuntimeException(e);
         }
 
-
     }
 
     @Override
