@@ -4,9 +4,9 @@ import sngpc.webservice.*;
 
 public class SngpcIntegrationService implements SngpcSoap {
 
-    private final SngpcSoap wsSngpc;
+    private static final SngpcSoap wsSngpc;
 
-    public SngpcIntegrationService() {
+    static {
         try {
             wsSngpc = new Sngpc().getSngpcSoap();
         } catch (Exception e) {
