@@ -1,6 +1,9 @@
 package org.example;
 
 
+import sngpc.webservice.ValidarUsuario;
+import sngpc.webservice.ValidarUsuarioResponse;
+
 public class Main {
 
     private static final String EMAIL = "teste@anvisa.gov.br";
@@ -11,9 +14,19 @@ public class Main {
 
         var wsSngpc = new SngpcIntegrationService();
 
-        var result = wsSngpc.validarUsuario(EMAIL, PASSWORD);
+        var validarUsuario = new ValidarUsuario();
 
-        System.out.println(result);
+        validarUsuario.setEmail(EMAIL);
+        validarUsuario.setSenha(PASSWORD);
+
+        var result = wsSngpc.validarUsuario(validarUsuario.getEmail(), validarUsuario.getSenha());
+
+
+        var validarUsuarioResponse = new ValidarUsuarioResponse();
+
+        validarUsuarioResponse.setValidarUsuarioResult(result);
+
+        System.out.println(validarUsuarioResponse.getValidarUsuarioResult());
     }
 
 
