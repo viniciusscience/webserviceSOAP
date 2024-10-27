@@ -2,6 +2,8 @@ package org.example;
 
 import sngpc.webservice.*;
 
+import java.util.function.Supplier;
+
 public class SngpcIntegrationService implements SngpcSoap {
 
     private static final SngpcSoap wsSngpc;
@@ -17,34 +19,35 @@ public class SngpcIntegrationService implements SngpcSoap {
 
     @Override
     public String enviaArquivoSNGPC(String email, String senha, byte[] arq, String hashIdentificacao) {
-        try {
-            return wsSngpc.enviaArquivoSNGPC(email, senha, arq, hashIdentificacao);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+        return tryAndGetResult(() -> wsSngpc.enviaArquivoSNGPC(email, senha, arq, hashIdentificacao));
+
 
     }
 
     @Override
     public String validarUsuario(String email, String senha) {
 
-        try {
-            return wsSngpc.validarUsuario(email, senha);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return tryAndGetResult(() -> wsSngpc.validarUsuario(email, senha));
+
 
     }
 
     @Override
     public String consultaDadosArquivoSNGPC(String email, String senha, String cnpj, String hash) {
+        return tryAndGetResult(() -> wsSngpc.consultaDadosArquivoSNGPC(email, senha, cnpj, hash));
+
+
+    }
+
+
+    private <T> T tryAndGetResult(Supplier<T> supplier) {
 
         try {
-            return wsSngpc.consultaDadosArquivoSNGPC(email, senha, cnpj, hash);
+            return supplier.get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 }
 
