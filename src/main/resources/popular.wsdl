@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.datasus.org/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.datasus.org/" xmlns:intf="http://service.datasus.org/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="http://service.datasus.org/" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="PesquisaDTO">
+    <sequence>
+     <element name="dataFim" nillable="true" type="xsd:dateTime"/>
+     <element name="dataInicio" nillable="true" type="xsd:dateTime"/>
+     <element name="nuCnpj" nillable="true" type="xsd:string"/>
+     <element name="nuCnpjMatriz" nillable="true" type="xsd:string"/>
+     <element name="numeroPagina" type="xsd:int"/>
+     <element name="statusTransacao" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="UsuarioDTO">
+    <sequence>
+     <element name="senhaFarmacia" nillable="true" type="xsd:string"/>
+     <element name="senhaVendedor" nillable="true" type="xsd:string"/>
+     <element name="usuarioFarmacia" nillable="true" type="xsd:string"/>
+     <element name="usuarioVendedor" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="UsuarioFarmaciaDTO">
+    <complexContent>
+     <extension base="impl:UsuarioDTO">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="MedicamentoDTO">
+    <sequence>
+     <element name="coCodigoBarra" nillable="true" type="xsd:string"/>
+     <element name="dsUnidApresentacao" nillable="true" type="xsd:string"/>
+     <element name="inAutorizacaoEstorno" nillable="true" type="xsd:string"/>
+     <element name="inAutorizacaoMedicamento" nillable="true" type="xsd:string"/>
+     <element name="qtAutorizada" type="xsd:double"/>
+     <element name="qtDevolvida" type="xsd:double"/>
+     <element name="qtEstornada" type="xsd:double"/>
+     <element name="qtPrescrita" type="xsd:double"/>
+     <element name="qtSolicitada" type="xsd:double"/>
+     <element name="statusTransacao" nillable="true" type="xsd:string"/>
+     <element name="vlPrecoSubsidiadoMS" type="xsd:double"/>
+     <element name="vlPrecoSubsidiadoPaciente" type="xsd:double"/>
+     <element name="vlPrecoSubsidiadoPacientePosEstorno" type="xsd:double"/>
+     <element name="vlPrecoVenda" type="xsd:double"/>
+     <element name="vlrSubsidiadoMSPosEstorno" type="xsd:double"/>
+     <element name="vlrTotalVendaPosEstorno" type="xsd:double"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfMedicamentoDTO">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:MedicamentoDTO[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ItemPesquisaDTO">
+    <sequence>
+     <element name="arrMedicamentoDTO" nillable="true" type="impl:ArrayOfMedicamentoDTO"/>
+     <element name="coSolicitacaoFarmacia" nillable="true" type="xsd:string"/>
+     <element name="dtAutorizacao" nillable="true" type="xsd:dateTime"/>
+     <element name="dtRecebimento" nillable="true" type="xsd:dateTime"/>
+     <element name="dtSolicitacao" nillable="true" type="xsd:dateTime"/>
+     <element name="nuAutorizacao" nillable="true" type="xsd:string"/>
+     <element name="nuCpf" nillable="true" type="xsd:string"/>
+     <element name="nuCrm" nillable="true" type="xsd:string"/>
+     <element name="nuCupomFiscal" nillable="true" type="xsd:string"/>
+     <element name="sgUfCrm" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOfItemPesquisaDTO">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:ItemPesquisaDTO[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="RetornoPesquisaDTO">
+    <sequence>
+     <element name="arrItemPesquisaDTO" nillable="true" type="impl:ArrayOfItemPesquisaDTO"/>
+     <element name="codigoRetorno" nillable="true" type="xsd:string"/>
+     <element name="dataFim" nillable="true" type="xsd:dateTime"/>
+     <element name="dataInicio" nillable="true" type="xsd:dateTime"/>
+     <element name="mensagemRetorno" nillable="true" type="xsd:string"/>
+     <element name="nuCnpj" nillable="true" type="xsd:string"/>
+     <element name="nuCnpjMatriz" nillable="true" type="xsd:string"/>
+     <element name="numeroPagina" type="xsd:int"/>
+     <element name="quantidadePaginas" type="xsd:int"/>
+     <element name="statusTransacao" nillable="true" type="xsd:string"/>
+     <element name="totalTransacoes" type="xsd:int"/>
+     <element name="totalTransacoesPagina" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="EstornoDTO">
+    <sequence>
+     <element name="arrMedicamentoDTO" nillable="true" type="impl:ArrayOfMedicamentoDTO"/>
+     <element name="nuAutorizacao" nillable="true" type="xsd:string"/>
+     <element name="nuCnpj" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ConfirmacaoEstornoDTO">
+    <sequence>
+     <element name="arrMedicamentoDTO" nillable="true" type="impl:ArrayOfMedicamentoDTO"/>
+     <element name="descMensagemErro" nillable="true" type="xsd:string"/>
+     <element name="inSituacaoEstorno" nillable="true" type="xsd:string"/>
+     <element name="nuEstorno" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ConfirmacaoDTO">
+    <sequence>
+     <element name="coSolicitacaoFarmacia" nillable="true" type="xsd:string"/>
+     <element name="descMensagem" nillable="true" type="xsd:string"/>
+     <element name="nuAutorizacao" nillable="true" type="xsd:string"/>
+     <element name="nuCupomFiscal" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ConfirmacaoAutorizacaoDTO">
+    <sequence>
+     <element name="arrMedicamentoDTO" nillable="true" type="impl:ArrayOfMedicamentoDTO"/>
+     <element name="coSolicitacaoFarmacia" nillable="true" type="xsd:string"/>
+     <element name="descMensagemErro" nillable="true" type="xsd:string"/>
+     <element name="inAutorizacaoSolicitacao" nillable="true" type="xsd:string"/>
+     <element name="noPessoa" nillable="true" type="xsd:string"/>
+     <element name="nuAutorizacao" nillable="true" type="xsd:string"/>
+     <element name="nuCupomFiscal" nillable="true" type="xsd:string"/>
+     <element name="statusConfirmacao" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="SolicitacaoDTO">
+    <sequence>
+     <element name="arrMedicamentoDTO" nillable="true" type="impl:ArrayOfMedicamentoDTO"/>
+     <element name="coSolicitacaoFarmacia" nillable="true" type="xsd:string"/>
+     <element name="dnaEstacao" nillable="true" type="xsd:string"/>
+     <element name="dtEmissaoReceita" nillable="true" type="xsd:dateTime"/>
+     <element name="dtEmissaoReceitaAsString" nillable="true" type="xsd:string"/>
+     <element name="nuCnpj" nillable="true" type="xsd:string"/>
+     <element name="nuCpf" nillable="true" type="xsd:string"/>
+     <element name="nuCrm" nillable="true" type="xsd:string"/>
+     <element name="sgUfCrm" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="AutorizacaoDTO">
+    <sequence>
+     <element name="arrMedicamentoDTO" nillable="true" type="impl:ArrayOfMedicamentoDTO"/>
+     <element name="coSolicitacaoFarmacia" nillable="true" type="xsd:string"/>
+     <element name="descMensagemErro" nillable="true" type="xsd:string"/>
+     <element name="inAutorizacaoSolicitacao" nillable="true" type="xsd:string"/>
+     <element name="noPessoa" nillable="true" type="xsd:string"/>
+     <element name="nuAutorizacao" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="RecebimentoDTO">
+    <sequence>
+     <element name="arrMedicamentoDTO" nillable="true" type="impl:ArrayOfMedicamentoDTO"/>
+     <element name="nuAutorizacao" nillable="true" type="xsd:string"/>
+     <element name="nuCupomFiscal" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ConfirmacaoRecebimentoDTO">
+    <sequence>
+     <element name="arrMedicamentoDTO" nillable="true" type="impl:ArrayOfMedicamentoDTO"/>
+     <element name="codigoRetorno" nillable="true" type="xsd:string"/>
+     <element name="cupomVinculado" nillable="true" type="xsd:string"/>
+     <element name="mensagemRetorno" nillable="true" type="xsd:string"/>
+     <element name="nuAutorizacao" nillable="true" type="xsd:string"/>
+     <element name="statusRecebimento" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="confirmarAutorizacaoResponse">
+
+      <wsdl:part name="confirmarAutorizacaoReturn" type="impl:ConfirmacaoAutorizacaoDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="executarEstornoRequest">
+
+      <wsdl:part name="in0" type="impl:EstornoDTO">
+
+      </wsdl:part>
+
+      <wsdl:part name="in1" type="impl:UsuarioFarmaciaDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="executarEstornoResponse">
+
+      <wsdl:part name="executarEstornoReturn" type="impl:ConfirmacaoEstornoDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="pesquisarAutorizacoesResponse">
+
+      <wsdl:part name="pesquisarAutorizacoesReturn" type="impl:RetornoPesquisaDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="confirmarAutorizacaoRequest">
+
+      <wsdl:part name="in0" type="impl:ConfirmacaoDTO">
+
+      </wsdl:part>
+
+      <wsdl:part name="in1" type="impl:UsuarioFarmaciaDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="executarSolicitacaoResponse">
+
+      <wsdl:part name="executarSolicitacaoReturn" type="impl:AutorizacaoDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="confirmarRecebimentoRequest">
+
+      <wsdl:part name="in0" type="impl:RecebimentoDTO">
+
+      </wsdl:part>
+
+      <wsdl:part name="in1" type="impl:UsuarioFarmaciaDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="confirmarRecebimentoResponse">
+
+      <wsdl:part name="confirmarRecebimentoReturn" type="impl:ConfirmacaoRecebimentoDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="executarSolicitacaoRequest">
+
+      <wsdl:part name="in0" type="impl:SolicitacaoDTO">
+
+      </wsdl:part>
+
+      <wsdl:part name="in1" type="impl:UsuarioFarmaciaDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="pesquisarAutorizacoesRequest">
+
+      <wsdl:part name="in0" type="impl:PesquisaDTO">
+
+      </wsdl:part>
+
+      <wsdl:part name="in1" type="impl:UsuarioFarmaciaDTO">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ServicoSolicitacaoWS">
+
+      <wsdl:operation name="pesquisarAutorizacoes" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:pesquisarAutorizacoesRequest" name="pesquisarAutorizacoesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:pesquisarAutorizacoesResponse" name="pesquisarAutorizacoesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="executarEstorno" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:executarEstornoRequest" name="executarEstornoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:executarEstornoResponse" name="executarEstornoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="confirmarAutorizacao" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:confirmarAutorizacaoRequest" name="confirmarAutorizacaoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:confirmarAutorizacaoResponse" name="confirmarAutorizacaoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="executarSolicitacao" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:executarSolicitacaoRequest" name="executarSolicitacaoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:executarSolicitacaoResponse" name="executarSolicitacaoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="confirmarRecebimento" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:confirmarRecebimentoRequest" name="confirmarRecebimentoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:confirmarRecebimentoResponse" name="confirmarRecebimentoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ServicoSolicitacaoWSSoapBinding" type="impl:ServicoSolicitacaoWS">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="pesquisarAutorizacoes">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="pesquisarAutorizacoesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="pesquisarAutorizacoesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="executarEstorno">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="executarEstornoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="executarEstornoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="confirmarAutorizacao">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="confirmarAutorizacaoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="confirmarAutorizacaoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="executarSolicitacao">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="executarSolicitacaoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="executarSolicitacaoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="confirmarRecebimento">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="confirmarRecebimentoRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="confirmarRecebimentoResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://service.datasus.org/" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ServicoSolicitacaoWSService">
+
+      <wsdl:port binding="impl:ServicoSolicitacaoWSSoapBinding" name="ServicoSolicitacaoWS">
+
+         <wsdlsoap:address location="https://farmaciapopular-autorizador-homologacao.saude.gov.br/farmaciapopular-autorizador/services/ServicoSolicitacaoWS"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
